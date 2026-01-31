@@ -147,6 +147,8 @@ public class Level {
         players.add(player);
         Square square = startSquares.get(startSquareIndex);
         player.occupy(square);
+        // Set the player's spawn point
+        player.setStartSquare(square);
         startSquareIndex++;
         startSquareIndex %= startSquares.size();
     }

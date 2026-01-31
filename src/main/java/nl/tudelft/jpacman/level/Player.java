@@ -4,6 +4,7 @@ import java.util.Map;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
 
@@ -18,6 +19,16 @@ public class Player extends Unit {
      * The amount of points accumulated by this player.
      */
     private int score;
+
+    /**
+     * The number of lives remaining for this player.
+     */
+    private int lives;
+
+    /**
+     * Player spawn point
+     */
+    private Square startSquare;
 
     /**
      * The animations for every direction.
@@ -49,6 +60,7 @@ public class Player extends Unit {
      */
     protected Player(Map<Direction, Sprite> spriteMap, AnimatedSprite deathAnimation) {
         this.score = 0;
+        this.lives = 3;
         this.alive = true;
         this.sprites = spriteMap;
         this.deathSprite = deathAnimation;
@@ -108,6 +120,43 @@ public class Player extends Unit {
      */
     public int getScore() {
         return score;
+    }
+
+    /**
+     * Returns the number of lives remaining for this player.
+     *
+     * @return The number of lives remaining.
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    /**
+     * Sets the number of lives for this player.
+     *
+     * @param lives The number of lives to set.
+     */
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    /**
+     * Sets the starting square for respawning.
+     *
+     * @param startSquare The starting square.
+     */
+    public void setStartSquare(Square startSquare) {
+        this.startSquare = startSquare;
+    }
+
+    /**
+     * Respawns the player at the starting square if set.
+     */
+    public void respawn() {
+        if (startSquare != null) {
+            occupy(startSquare);
+            setAlive(true);
+        }
     }
 
     @Override
